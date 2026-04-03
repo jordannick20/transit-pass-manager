@@ -3,6 +3,7 @@
     "java.project.outputPath": "bin",
     "github.copilot.enable": { "*": false },
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "miglayout15-swing.jar"
     ]
 }
