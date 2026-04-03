@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "View",
+            "request": "launch",
+            "mainClass": "View",
+            "projectName": "oop-project-3-jordannick20_41bce562"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
