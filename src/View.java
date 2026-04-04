@@ -3,6 +3,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import java.awt.Font;
@@ -14,6 +16,10 @@ public class View extends JFrame {
     private CardLayout cardLayout;
     private JPanel mainContainer;
     private JPanel creatPanel;
+    private JPanel viewPanel;
+    private JPanel scanPanel;
+
+    private JTextArea txtViewOutput;
 
     private JButton btnSelect;
     private JButton btnTopup;
@@ -22,12 +28,16 @@ public class View extends JFrame {
     private JButton btnDelete;
     private JButton btnView;
     private JButton btnQuit;
+    private JButton btnViewBack;
+    private JButton btnOk;
     
     private JComboBox<String> cmbPassType;
     private JTextField txtHolderName;
     private JTextField txtInitialBalance;
     private JButton btnCreatePass;
     private JButton btnBack;
+
+
 
     public View() {
         setTitle("Transit Pass");
@@ -41,6 +51,8 @@ public class View extends JFrame {
 
         buildMainMenuPanel();
         buildCreatePanel();
+        buildViewPanel();
+        buildScanPanel();
     }
     
     private void buildMainMenuPanel() {
@@ -87,12 +99,18 @@ public class View extends JFrame {
         btnCreate.addActionListener(e -> {
             cardLayout.show(mainContainer, "CREATE");
         });
+        btnView.addActionListener(e -> {
+            cardLayout.show(mainContainer, "VIEW");
+        });
+        btnScan.addActionListener(e -> {
+            cardLayout.show(mainContainer, "SCAN");
+        });
     }
     
     private void buildCreatePanel() {
         JPanel createPanel = new JPanel(new MigLayout("insets 25", "[][grow]", "[]20[]15[]15[]25[]"));
 
-        JLabel lblCreateTitle = new JLabel("Create New Pass");
+        JLabel lblCreateTitle = new JLabel("Transit Pass Management System v1.0 >");
         lblCreateTitle.setFont(new Font(Font.MONOSPACED,Font.BOLD, 24));
         createPanel.add(lblCreateTitle, "span 2, wrap");
 
@@ -122,6 +140,39 @@ public class View extends JFrame {
         });
 
         mainContainer.add(createPanel, "CREATE");
+    }
+
+    private void buildViewPanel() {
+        viewPanel = new JPanel(new MigLayout("insets 25", "[grow]", "[]20[grow]20[]"));
+
+        JLabel lblTitle = new JLabel("Transit Pass Management System v1.0 >");
+        lblTitle.setFont(new Font(Font.MONOSPACED,Font.BOLD, 24));
+        viewPanel.add(lblTitle, "wrap");
+
+        txtViewOutput = new JTextArea(15, 40);
+        txtViewOutput.setEditable(false);
+
+        JScrollPane scrollPane = new JScrollPane(txtViewOutput);
+        viewPanel.add(scrollPane, "grow, wrap");
+
+        btnViewBack = new JButton("Back");
+        viewPanel.add(btnViewBack, "right");
+
+        btnViewBack.addActionListener(e -> {
+            cardLayout.show(mainContainer, "MAIN");
+        });
+
+        mainContainer.add(viewPanel, "VIEW");
+}
+    private void buildScanPanel() {
+        scanPanel = new JPanel(new MigLayout("insets 25", "[]", "[]20[]20[]"));
+
+        JLabel lblTitle = new JLabel("Transit Pass Management System v1.0 >");
+        lblTitle.setFont(new Font(Font.MONOSPACED,Font.BOLD, 24));
+        scanPanel.add(lblTitle, "wrap");
+
+        mainContainer.add(scanPanel, "SCAN");
+
     }
 
     private void clearCreateFields() {
