@@ -78,7 +78,7 @@ public class View extends JFrame {
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
+        // setup for card layout 
         cardLayout = new CardLayout();
         mainContainer = new JPanel(cardLayout);
         setContentPane(mainContainer);
@@ -264,11 +264,11 @@ public class View extends JFrame {
         deletePanel.add(lblTitle, "span 2, wrap");
 
         JLabel lblQuestion = new JLabel("Delete Current Pass?");
-        lblQuestion.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        lblQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
         deletePanel.add(lblQuestion);
 
         lblDeletePassName = new JLabel("");
-        lblDeletePassName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblDeletePassName.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
         deletePanel.add(lblDeletePassName, "wrap");
 
         btnDeleteOk = new JButton("Ok");
