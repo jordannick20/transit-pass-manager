@@ -237,7 +237,7 @@ public class View extends JFrame {
         selectPanel.add(lblTitle, "span 2, wrap");
 
         JLabel lblSelect = new JLabel("Select Pass:");
-        lblSelect.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        lblSelect.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
         selectPanel.add(lblSelect, "top");
 
         listModel = new DefaultListModel<>();
