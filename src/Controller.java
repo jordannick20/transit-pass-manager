@@ -46,4 +46,152 @@ public class Controller {
         // Quit event
         view.addQuitListener((ActionEvent e) -> onQuit(e));
     }
+
+    // Create Screen Methods
+    private void onOpenCreateScreen(ActionEvent e) {
+        view.showCreateScreen();
+    }
+
+    private void onBackFromCreate(ActionEvent e) { 
+        view.clearCreateFields();
+        view.showMainMenu();
+    }
+
+    private void onCreatePass(ActionEvent e) {
+        String holderName = view.getHolderNameInput();
+        String balanceText = view.getInitialBalanceInput();
+        String passType = view.getSelectedPassType();
+
+        if (holderName.isEmpty()) {
+            view.showErrorMessage("Holder name is required.");
+            return;
+        }
+
+        double balance;
+
+        try {
+            balance = Double.parseDouble(balanceText);
+        } catch (NumberFormatException nfex) {
+            view.showErrorMessage("Initial balance must be a valid number.");
+            return;
+        }
+
+        if (balance < 0) {
+            view.showErrorMessage("Initial balance cannot be negative.");
+            return;
+        }
+
+        //
+        view.setMainButtonsEnabled(true);
+
+        view.showInfoMessage("Pass created successfully.");
+        view.clearCreateFields();
+        view.showMainMenu();
+    }
+
+    // Top-Up Screen Methods
+    private void onOpenTopUpScreen(ActionEvent e) {
+        view.showTopUpScreen();
+    }
+
+    private void onTopUpPass(ActionEvent e) {
+        String amountText = view.getTopUpAmountInput();
+        double amount;
+
+        try {
+            amount = Double.parseDouble(amountText);
+        } catch (NumberFormatException nfex) {
+            view.showErrorMessage("Top-up amount must be a valid number.");
+            return;
+        }
+
+        if (amount <= 0) {
+            view.showErrorMessage("Top-up amount must be greater than 0.");
+            return;
+        }
+
+  
+
+        if (success) {
+            view.showInfoMessage("Top-up successful.");
+        }
+        view.showMainMenu();
+    }
+
+    private void onCancelTopUp(ActionEvent e) {
+        view.showMainMenu();
+    }
+
+    // Scan Screen Methods
+    private void onOpenScanScreen(ActionEvent e) {
+
+        view.showScanScreen(passName);
+    }
+
+    private void onConfirmScan(ActionEvent e) {
+  
+
+        if (success) {
+            view.showInfoMessage("Trip scanned successfully.");
+        } else {
+            view.showErrorMessage("Insufficient balance.");
+        }
+
+        view.showMainMenu();
+    }
+
+    private void onCancelScan(ActionEvent e) {
+        view.showMainMenu();
+    }
+
+    // Select Screen Methods
+    private void onOpenSelectScreen(ActionEvent e) {
+
+    }
+
+    private void onConfirmSelectPass(ActionEvent e) {
+        int selectedIndex = view.getSelectedPassIndex();
+        view.showInfoMessage("Pass selected successfully.");
+        view.showMainMenu();
+    }
+
+    private void onCancelSelectPass(ActionEvent e) {
+        view.showMainMenu();
+    }
+
+    // Delete Screen Methods
+    private void onOpenDeleteScreen(ActionEvent e) {
+  
+        view.showDeleteScreen(passName);
+    }
+
+    private void onConfirmDelete(ActionEvent e) {
+  
+
+        if (success) {
+            view.showInfoMessage("Pass deleted successfully.");
+        }
+  
+}
+        view.showMainMenu();
+    }
+
+    private void onCancelDelete(ActionEvent e) {
+        view.showMainMenu();
+    }
+
+    // View Screen Methods
+    private void onViewPass(ActionEvent e) {
+        
+        view.showViewScreen(output);
+    }
+
+    private void onBackFromView(ActionEvent e) {
+        view.showMainMenu();
+    }
+
+    // App Exit
+    private void onQuit(ActionEvent e) {
+        System.exit(0);
+    }
 }

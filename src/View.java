@@ -315,6 +315,35 @@ public class View extends JFrame {
         cardLayout.show(mainContainer, "SELECT");
     }
 
+    // Input and helper methods
+
+    public int getSelectedPassIndex() {
+        return lstPasses.getSelectedIndex();
+    }
+
+    public void clearCreateFields() {
+        txtHolderName.setText("");
+        txtInitialBalance.setText("");
+        cmbPassType.setSelectedIndex(0);
+    }
+
+    public String getHolderNameInput() {
+        return txtHolderName.getText();
+    }
+
+    public String getInitialBalanceInput() {
+        return txtInitialBalance.getText();
+    }
+
+    public String getTopUpAmountInput() {
+        return txtTopUpAmount.getText();
+    }
+
+    // for the jCombobox that holds Strings
+    public String getSelectedPassType() {
+        return (String) cmbPassType.getSelectedItem();
+    }
+
     // Dialog Methods
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -322,6 +351,14 @@ public class View extends JFrame {
 
     public void showInfoMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Message", JOptionPane.INFORMATION_MESSAGE);
+    }
+    // when a pass is created enable the buttons
+    public void setMainButtonsEnabled(boolean enabled) {
+        btnSelect.setEnabled(enabled);
+        btnTopup.setEnabled(enabled);
+        btnScan.setEnabled(enabled);
+        btnView.setEnabled(enabled);
+        btnDelete.setEnabled(enabled);
     }
 
     // Button listeners
