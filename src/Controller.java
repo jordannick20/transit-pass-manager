@@ -81,6 +81,7 @@ public class Controller {
             return;
         }
 
+        model.createPass(holderName, balance, passType);
         //
         view.setMainButtonsEnabled(true);
 
@@ -110,7 +111,7 @@ public class Controller {
             return;
         }
 
-  
+        boolean success = model.topUpSelectedPass(amount);
 
         if (success) {
             view.showInfoMessage("Top-up successful.");
@@ -124,12 +125,12 @@ public class Controller {
 
     // Scan Screen Methods
     private void onOpenScanScreen(ActionEvent e) {
-
+        String passName = model.getSelectedPassName();
         view.showScanScreen(passName);
     }
 
     private void onConfirmScan(ActionEvent e) {
-  
+        boolean success = model.scanSelectedPass();
 
         if (success) {
             view.showInfoMessage("Trip scanned successfully.");
@@ -146,11 +147,12 @@ public class Controller {
 
     // Select Screen Methods
     private void onOpenSelectScreen(ActionEvent e) {
-
+        view.showSelectScreen(model.getPasses());
     }
 
     private void onConfirmSelectPass(ActionEvent e) {
         int selectedIndex = view.getSelectedPassIndex();
+        model.setSelectedPass(model.getPasses().get(selectedIndex));
         view.showInfoMessage("Pass selected successfully.");
         view.showMainMenu();
     }
@@ -161,17 +163,18 @@ public class Controller {
 
     // Delete Screen Methods
     private void onOpenDeleteScreen(ActionEvent e) {
-  
+        String passName = model.getSelectedPassName();
         view.showDeleteScreen(passName);
     }
 
     private void onConfirmDelete(ActionEvent e) {
-  
+        boolean success = model.deleteSelectedPass();
 
         if (success) {
             view.showInfoMessage("Pass deleted successfully.");
         }
-  
+        if (!model.hasPasses()) {
+            view.setMainButtonsEnabled(false);
 }
         view.showMainMenu();
     }
@@ -182,7 +185,7 @@ public class Controller {
 
     // View Screen Methods
     private void onViewPass(ActionEvent e) {
-        
+        String output = model.getSelectedPassDetails();
         view.showViewScreen(output);
     }
 

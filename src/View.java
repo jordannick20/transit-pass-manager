@@ -311,7 +311,17 @@ public class View extends JFrame {
         cardLayout.show(mainContainer, "DELETE");
     }
 
-    public void showSelectScreen() {
+    public void showSelectScreen(ArrayList<Model.TransitPass> passes) {
+        listModel.clear();
+
+        for (int i = 0; i < passes.size(); i++) {
+            Model.TransitPass pass = passes.get(i);
+            listModel.addElement(pass.getHolderName());
+        }
+
+        if (!listModel.isEmpty()) {
+            lstPasses.setSelectedIndex(0);
+        }
         cardLayout.show(mainContainer, "SELECT");
     }
 
