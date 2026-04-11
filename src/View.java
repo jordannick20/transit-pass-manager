@@ -78,7 +78,7 @@ public class View extends JFrame {
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        // setup for card layout 
+
         cardLayout = new CardLayout();
         mainContainer = new JPanel(cardLayout);
         setContentPane(mainContainer);
@@ -229,7 +229,110 @@ public class View extends JFrame {
         mainContainer.add(topupPanel, "TOPUP");
     }
 
-    private void clearCreateFields() {
+    private void buildSelectPanel() {
+        selectPanel = new JPanel(new MigLayout("insets 35", "[]20[grow]", "[]30[grow]30[]"));
+
+        JLabel lblTitle = new JLabel("Transit Pass Management System v1.0 >");
+        lblTitle.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+        selectPanel.add(lblTitle, "span 2, wrap");
+
+        JLabel lblSelect = new JLabel("Select Pass:");
+        lblSelect.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        selectPanel.add(lblSelect, "top");
+
+        listModel = new DefaultListModel<>();
+        lstPasses = new JList<>(listModel);
+
+        JScrollPane scrollPane = new JScrollPane(lstPasses);
+        scrollPane.setPreferredSize(new Dimension(380, 270));
+        selectPanel.add(scrollPane, "grow, wrap");
+
+        btnSelectOk = new JButton("Ok");
+        btnSelectCancel = new JButton("Cancel");
+
+        selectPanel.add(btnSelectOk, "split 2, gapleft 10");
+        selectPanel.add(btnSelectCancel);
+
+        mainContainer.add(selectPanel, "SELECT");
+    }
+
+    private void buildDeletePanel() {
+        deletePanel = new JPanel(new MigLayout("insets 35", "[]20[]", "[]35[]35[]"));
+
+        JLabel lblTitle = new JLabel("Transit Pass Management System v1.0 >");
+        lblTitle.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+        deletePanel.add(lblTitle, "span 2, wrap");
+
+        JLabel lblQuestion = new JLabel("Delete Current Pass?");
+        lblQuestion.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        deletePanel.add(lblQuestion);
+
+        lblDeletePassName = new JLabel("");
+        lblDeletePassName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        deletePanel.add(lblDeletePassName, "wrap");
+
+        btnDeleteOk = new JButton("Ok");
+        btnDeleteCancel = new JButton("Cancel");
+
+        deletePanel.add(btnDeleteOk, "split 2, gapleft 250");
+        deletePanel.add(btnDeleteCancel);
+
+        mainContainer.add(deletePanel, "DELETE");
+    }
+
+    // Screen Display Methods
+    
+
+    public void showMainMenu() {
+        cardLayout.show(mainContainer, "MAIN");
+    }
+
+    public void showTopUpScreen() {
+        txtTopUpAmount.setText("");
+        cardLayout.show(mainContainer, "TOPUP");
+    }
+
+    public void showCreateScreen() {
+        cardLayout.show(mainContainer, "CREATE");
+    }
+
+    public void showViewScreen(String text) {
+        txtViewOutput.setText(text);
+        cardLayout.show(mainContainer, "VIEW");
+    }
+
+    public void showScanScreen(String passName) {
+        lblScanPassName.setText(passName);
+        cardLayout.show(mainContainer, "SCAN");
+    }
+
+    public void showDeleteScreen(String passName) {
+        lblDeletePassName.setText(passName);
+        cardLayout.show(mainContainer, "DELETE");
+    }
+
+    public void showSelectScreen(ArrayList<Model.TransitPass> passes) {
+        listModel.clear();
+
+        for (int i = 0; i < passes.size(); i++) {
+            Model.TransitPass pass = passes.get(i);
+            listModel.addElement(pass.getHolderName());
+        }
+
+        if (!listModel.isEmpty()) {
+            lstPasses.setSelectedIndex(0);
+        }
+
+        cardLayout.show(mainContainer, "SELECT");
+    }
+
+    // Input and helper methods
+
+    public int getSelectedPassIndex() {
+        return lstPasses.getSelectedIndex();
+    }
+showSelectScreen
+    public void clearCreateFields() {
         txtHolderName.setText("");
         txtInitialBalance.setText("");
         cmbPassType.setSelectedIndex(0);
@@ -246,7 +349,6 @@ public class View extends JFrame {
     public String getTopUpAmountInput() {
         return txtTopUpAmount.getText();
     }
-
     // for the jCombobox that holds Strings
     public String getSelectedPassType() {
         return (String) cmbPassType.getSelectedItem();
@@ -262,12 +364,12 @@ public class View extends JFrame {
     }
     // when a pass is created enable the buttons
     public void setMainButtonsEnabled(boolean enabled) {
-        btnSelect.setEnabled(enabled);
-        btnTopup.setEnabled(enabled);
-        btnScan.setEnabled(enabled);
-        btnView.setEnabled(enabled);
-        btnDelete.setEnabled(enabled);
-    }
+    btnSelect.setEnabled(enabled);
+    btnTopup.setEnabled(enabled);
+    btnScan.setEnabled(enabled);
+    btnView.setEnabled(enabled);
+    btnDelete.setEnabled(enabled);
+}
 
     // Button listeners
 
@@ -295,6 +397,7 @@ public class View extends JFrame {
         btnViewBack.addActionListener(listener);
     }
     
+
     public void addScanListener(ActionListener listener) {
         btnScan.addActionListener(listener);
     }
