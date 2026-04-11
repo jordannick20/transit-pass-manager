@@ -331,7 +331,7 @@ public class View extends JFrame {
     public int getSelectedPassIndex() {
         return lstPasses.getSelectedIndex();
     }
-showSelectScreen
+
     public void clearCreateFields() {
         txtHolderName.setText("");
         txtInitialBalance.setText("");

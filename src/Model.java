@@ -206,6 +206,11 @@ public class Model {
         public String getPassType() {
             return "Green Pass";
         }
+        
+        @Override
+        public String getExtraDetails() {
+            return "\n" + "Carbon Credits: " + carbonCredits + "\n";
+        }
     }
 
     public static class Transaction {
@@ -223,6 +228,11 @@ public class Model {
 
         public double getAmount() {
             return amount;
+        }
+
+        @Override
+        public String toString() {
+            return type + ": $ " + String.format("%.2f", amount);
         }
     }
 }
