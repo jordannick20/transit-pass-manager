@@ -129,7 +129,7 @@ public class View extends JFrame {
         btnQuit = new JButton("quit");
         mainMenuPanel.add(btnQuit);
         mainMenuPanel.add(new JLabel("Save and Quit"), "wrap");
-        setMainButtonsEnabled(false);
+        setMainButtonsDisabled();
 
         mainContainer.add(mainMenuPanel, "MAIN");
     }
@@ -190,11 +190,11 @@ public class View extends JFrame {
         scanPanel.add(lblTitle, "span 2, wrap");
 
         JLabel lblQuestion = new JLabel("Scan Current Pass?");
-        lblQuestion.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        lblQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
         scanPanel.add(lblQuestion);
 
         lblScanPassName = new JLabel("");
-        lblScanPassName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblScanPassName.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
         scanPanel.add(lblScanPassName, "wrap");
 
         btnScanOk = new JButton("Ok");
@@ -214,7 +214,7 @@ public class View extends JFrame {
         topupPanel.add(lblTitle, "span 2, wrap");
 
         JLabel lblPrompt = new JLabel("Enter Amount to top-up: $");
-        lblPrompt.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+        lblPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         topupPanel.add(lblPrompt);
 
         txtTopUpAmount = new JTextField(10);
@@ -237,7 +237,7 @@ public class View extends JFrame {
         selectPanel.add(lblTitle, "span 2, wrap");
 
         JLabel lblSelect = new JLabel("Select Pass:");
-        lblSelect.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        lblSelect.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
         selectPanel.add(lblSelect, "top");
 
         listModel = new DefaultListModel<>();
@@ -264,11 +264,11 @@ public class View extends JFrame {
         deletePanel.add(lblTitle, "span 2, wrap");
 
         JLabel lblQuestion = new JLabel("Delete Current Pass?");
-        lblQuestion.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        lblQuestion.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
         deletePanel.add(lblQuestion);
 
         lblDeletePassName = new JLabel("");
-        lblDeletePassName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblDeletePassName.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
         deletePanel.add(lblDeletePassName, "wrap");
 
         btnDeleteOk = new JButton("Ok");
@@ -282,7 +282,6 @@ public class View extends JFrame {
 
     // Screen Display Methods
     
-
     public void showMainMenu() {
         cardLayout.show(mainContainer, "MAIN");
     }
@@ -313,9 +312,10 @@ public class View extends JFrame {
 
     public void showSelectScreen(ArrayList<Model.TransitPass> passes) {
         listModel.clear();
-
+        // adds the pass holder names to the list
         for (int i = 0; i < passes.size(); i++) {
             Model.TransitPass pass = passes.get(i);
+            // listmodel is the jlist
             listModel.addElement(pass.getHolderName());
         }
 
@@ -353,7 +353,6 @@ public class View extends JFrame {
     public String getSelectedPassType() {
         return (String) cmbPassType.getSelectedItem();
     }
-
     // Dialog Methods
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -363,15 +362,22 @@ public class View extends JFrame {
         JOptionPane.showMessageDialog(this, message, "Message", JOptionPane.INFORMATION_MESSAGE);
     }
     // when a pass is created enable the buttons
-    public void setMainButtonsEnabled(boolean enabled) {
-    btnSelect.setEnabled(enabled);
-    btnTopup.setEnabled(enabled);
-    btnScan.setEnabled(enabled);
-    btnView.setEnabled(enabled);
-    btnDelete.setEnabled(enabled);
-}
-
-    // Button listeners
+    public void setMainButtonsEnabled() {
+        btnSelect.setEnabled(true);
+        btnTopup.setEnabled(true);
+        btnScan.setEnabled(true);
+        btnView.setEnabled(true);
+        btnDelete.setEnabled(true);
+    }
+    // if pass is deleted disable
+    public void setMainButtonsDisabled() {
+        btnSelect.setEnabled(false);
+        btnTopup.setEnabled(false);
+        btnScan.setEnabled(false);
+        btnView.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+    // Action listeners for buttons
 
     public void addQuitListener(ActionListener listener) {
         btnQuit.addActionListener(listener);
@@ -397,7 +403,6 @@ public class View extends JFrame {
         btnViewBack.addActionListener(listener);
     }
     
-
     public void addScanListener(ActionListener listener) {
         btnScan.addActionListener(listener);
     }
