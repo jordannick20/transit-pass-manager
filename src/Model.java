@@ -194,6 +194,7 @@ public class Model {
         @Override
         public void topUp(double amount) {
             if (amount > 0) {
+                // run the topup method from the parent class 
                 super.topUp(amount);
                 carbonCredits = carbonCredits + (int) (amount / 10);
             }
