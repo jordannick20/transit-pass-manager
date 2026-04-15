@@ -37,7 +37,6 @@ public class Model {
             newPass = new StandardPass(holderName, balance);
         }
 
-        newPass.addTransaction(new Transaction("Initial Top Up", balance));
         passes.add(newPass);
         selectedPass = newPass;
 
@@ -48,13 +47,14 @@ public class Model {
     public String getSelectedPassDetails() {
         StringBuilder output = new StringBuilder();
         
-        output.append(String.format("Pass Holder: %s\nPass type: %s\nCurrent balance: $ %.2f\n%s",selectedPass.getHolderName(),selectedPass.getPassType(),selectedPass.getBalance(),selectedPass.getExtraDetails()));
+        output.append(String.format("Pass Holder: %s\nPass type: %s\nCurrent balance: $ %.2f\n%s",selectedPass.getHolderName(),selectedPass.getPassType(),selectedPass.getBalance(),selectedPass.addCarbonCredits()));
 
         ArrayList<Transaction> transactions = selectedPass.getTransactions();
 
         for (int i = 0; i < transactions.size(); i++) {
                 Transaction transaction = transactions.get(i);
-                output.append(transaction).append("\n");
+                output.append("Type: " + transaction.getType() + "\n");
+                output.append("Amount: $" + transaction.getAmount() + "\n");
         }
         return output.toString();
     }
@@ -99,7 +99,7 @@ public class Model {
     }
 
     public boolean hasPasses() {
-        return !passes.isEmpty();
+        return (!passes.isEmpty());
     }
 
     // the nested classes 
@@ -122,7 +122,7 @@ public class Model {
             return balance;
         }
 
-        public String getExtraDetails() {
+        public String addCarbonCredits() {
             return "";
         }
   
@@ -160,6 +160,7 @@ public class Model {
 
     public class StandardPass extends TransitPass {
         public StandardPass(String holderName, double balance) {
+            // super calls parent constructor
             super(holderName, balance);
         }
 
@@ -178,6 +179,7 @@ public class Model {
         private int carbonCredits;
 
         public GreenPass(String holderName, double balance) {
+            // super calls parent constructor
             super(holderName, balance);
             // activation bonus and credits from initial balance
             carbonCredits = 10; 
@@ -192,6 +194,7 @@ public class Model {
         @Override
         public void topUp(double amount) {
             if (amount > 0) {
+                // run the topup method from the parent class 
                 super.topUp(amount);
                 carbonCredits = carbonCredits + (int) (amount / 10);
             }
@@ -205,6 +208,10 @@ public class Model {
         @Override
         public String getPassType() {
             return "Green Pass";
+        }
+        @Override
+        public String addCarbonCredits() {
+            return "\n" + "Carbon Credits: " + carbonCredits + "\n";
         }
     }
 

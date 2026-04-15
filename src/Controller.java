@@ -83,7 +83,7 @@ public class Controller {
 
         model.createPass(holderName, balance, passType);
         //
-        view.setMainButtonsEnabled(true);
+        view.setMainButtonsEnabled();
 
         view.showInfoMessage("Pass created successfully.");
         view.clearCreateFields();
@@ -174,7 +174,7 @@ public class Controller {
             view.showInfoMessage("Pass deleted successfully.");
         }
         if (!model.hasPasses()) {
-            view.setMainButtonsEnabled(false);
+            view.setMainButtonsDisabled();
 }
         view.showMainMenu();
     }
