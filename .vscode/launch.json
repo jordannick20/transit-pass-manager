@@ -9,6 +9,13 @@
             "name": "View",
             "request": "launch",
             "mainClass": "View",
+            "projectName": "blah 3_6ade3136"
+        },
+        {
+            "type": "java",
+            "name": "View",
+            "request": "launch",
+            "mainClass": "View",
             "projectName": "oop-project-3-jordannick20_41bce562"
         },
         {
